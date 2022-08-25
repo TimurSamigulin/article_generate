@@ -1,4 +1,4 @@
-from app.m_bart import mbart
+from app.T5_summary import summarize
 
 
 def get_title(text: str) -> str:
@@ -9,8 +9,8 @@ def get_title(text: str) -> str:
 
     Returns:
         str: _description_
-    """   
+    """
 
-    summary = mbart(text)
+    summary = summarize(text)
 
-    return summary.split('.')[0]
+    return summary

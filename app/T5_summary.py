@@ -4,7 +4,9 @@ from transformers import T5ForConditionalGeneration, T5Tokenizer
 
 class ModelT5:
     model_name = "cointegrated/rut5-base-absum"
-    model = T5ForConditionalGeneration.from_pretrained(model_name)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = T5ForConditionalGeneration.from_pretrained(
+        model_name).to(device).eval()
     tokenizer = T5Tokenizer.from_pretrained(model_name)
 
 
@@ -21,8 +23,6 @@ def summarize(
     - compression (float) is an approximate length ratio of summary and original text.
     """
 
-    ModelT5.model.cuda()
-    ModelT5.model.eval()
     if n_words:
         text = '[{}] '.format(n_words) + text
     elif compression:
